@@ -1,0 +1,1 @@
+function get(e,t,r){try{if(t in e)return e[t];var s=e;return t.replace(/\[\s*(['"])((?!\1).)*\1\s*\]|^\s*(\w+)\s*(?=\.|\[|$)|\.\s*(\w*)\s*(?=\.|\[|$)|\[\s*(-?\d+)\s*\]/g,function(e,t,r,n,o,u){s=s[r||n||o||u]}),void 0==s?r:s}catch(e){return r}}Object.defineProperty(exports,"__esModule",{value:!0}),exports.get=get;

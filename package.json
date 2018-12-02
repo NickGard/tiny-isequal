@@ -1,0 +1,22 @@
+{
+  "name": "@ngard/tiny-get",
+  "version": "1.0.0",
+  "description": "A minimal-weight lodash.get equivalent utility",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha src/",
+    "build": "uglifyjs --compress --mangle --output index.js -- src/index.js"
+  },
+  "keywords": [
+    "lodash",
+    "get",
+    "util"
+  ],
+  "author": "Nick Gard",
+  "license": "MIT",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^5.2.0",
+    "uglify-es": "^3.3.9"
+  }
+}
