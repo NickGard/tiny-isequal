@@ -1,7 +1,7 @@
 {
-  "name": "@ngard/tiny-get",
+  "name": "@ngard/tiny-isequal",
   "version": "1.0.0",
-  "description": "A minimal-weight lodash.get equivalent utility",
+  "description": "A minimal-weight lodash.isequal equivalent utility",
   "main": "index.js",
   "scripts": {
     "test": "mocha src/",
@@ -9,8 +9,9 @@
   },
   "keywords": [
     "lodash",
-    "get",
-    "util"
+    "isequal",
+    "util",
+    "deep equal"
   ],
   "author": "Nick Gard",
   "license": "MIT",
@@ -18,5 +19,8 @@
     "chai": "^4.2.0",
     "mocha": "^5.2.0",
     "uglify-es": "^3.3.9"
+  },
+  "dependencies": {
+    "lodash.isequal": "^4.5.0"
   }
 }

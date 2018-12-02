@@ -1,19 +1,19 @@
-# tiny-get
+# tiny-isequal
 
-[![source](https://badgen.net/npm/v/@ngard/tiny-get)](https://www.npmjs.com/package/@ngard/tiny-get)
-[![bundle size](https://badgen.net/bundlephobia/minzip/@ngard/tiny-get)](https://bundlephobia.com/result?p=@ngard/tiny-get)
-[![build status](https://badgen.net/travis/NickGard/tiny-get)](https://travis-ci.org/NickGard/tiny-get)
+[![source](https://badgen.net/npm/v/@ngard/tiny-isequal)](https://www.npmjs.com/package/@ngard/tiny-isequal)
+[![bundle size](https://badgen.net/bundlephobia/minzip/@ngard/tiny-isequal)](https://bundlephobia.com/result?p=@ngard/tiny-isequal)
+[![build status](https://badgen.net/travis/NickGard/tiny-isequal)](https://travis-ci.org/NickGard/tiny-isequal)
 [![license](https://badgen.net/badge/license/MIT/blue)](https://badgen.net/badge/license/MIT/blue)
 
-A minimal, lodash.get equivalent utility. For when every byte counts!
+A minimal, lodash.isequal equivalent utility. For when every byte counts!
 
-lodash.get [![bundle size](https://badgen.net/bundlephobia/minzip/lodash.get)](https://bundlephobia.com/result?p=lodash.get)
-tiny-get [![bundle size](https://badgen.net/bundlephobia/minzip/@ngard/tiny-get)](https://bundlephobia.com/result?p=@ngard/tiny-get)
+lodash.isequal [![bundle size](https://badgen.net/bundlephobia/minzip/lodash.isequal)](https://bundlephobia.com/result?p=lodash.isequal)
+tiny-isequal [![bundle size](https://badgen.net/bundlephobia/minzip/@ngard/tiny-isequal)](https://bundlephobia.com/result?p=@ngard/tiny-isequal)
 
 ## Use
 
 ```
-import { get } from '@ngard/tiny-get';
+import { isequal } from '@ngard/tiny-isequal';
 
-const value = get(baseObj, 'really.deep.value', 'defaultValue');
+const samesies = isequal({ a: 1 }, { a: 1 });
 ```
