@@ -1,11 +1,15 @@
 {
   "name": "@ngard/tiny-isequal",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A minimal-weight lodash.isequal equivalent utility",
   "main": "index.js",
   "scripts": {
     "test": "mocha src/",
     "build": "uglifyjs --compress --mangle --output index.js -- src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NickGard/tiny-isequal.git"
   },
   "keywords": [
     "lodash",
@@ -22,5 +26,9 @@
   },
   "dependencies": {
     "lodash.isequal": "^4.5.0"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/NickGard/tiny-isequal/issues"
+  },
+  "homepage": "https://github.com/NickGard/tiny-isequal#readme"
 }
