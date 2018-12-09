@@ -1,6 +1,6 @@
 {
   "name": "@ngard/tiny-isequal",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A minimal-weight lodash.isequal equivalent utility",
   "main": "index.js",
   "scripts": {
@@ -22,9 +22,7 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "mocha": "^5.2.0",
-    "uglify-es": "^3.3.9"
-  },
-  "dependencies": {
+    "uglify-es": "^3.3.9",
     "lodash.isequal": "^4.5.0"
   },
   "bugs": {
