@@ -5,7 +5,7 @@ exports.isEqual = isEqual;
 
 function isEqual(a, b) {
   if (a === b) return true;
-  if (typeof a == "number" && typeof b == "number") return isNaN(a) && isNaN(b);
+  if (a !== a && b !== b) return true;
   if (Array.isArray(a) && Array.isArray(b) && a.length == b.length)
     return a.every(function(e, i) {
       return isEqual(e, b[i]);
