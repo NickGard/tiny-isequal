@@ -101,4 +101,18 @@ describe("tiny-lodash_isEqual", () => {
       });
     });
   });
+  it("should show self-referential objects equal to each other", () => {
+    const a = { id: 1 };
+    a.a = a;
+    const b = { id: 1 };
+    b.a = b;
+    expect(isEqual(a, b)).to.equal(true);
+  });
+  it("should not show two different self-referential objects equal to each other", () => {
+    const a = { id: 1 };
+    a.a = a;
+    const b = { id: 1 };
+    b.b = b;
+    expect(isEqual(a, b)).to.equal(false);
+  });
 });
