@@ -1,7 +1,7 @@
 {
   "name": "@ngard/tiny-isequal",
-  "version": "1.0.5",
-  "description": "A minimal-weight lodash.isequal equivalent utility",
+  "version": "1.0.6",
+  "description": "A minimal-weight utility similar to lodash.isequal",
   "main": "index.js",
   "scripts": {
     "test": "mocha src/",

@@ -5,8 +5,10 @@
 [![build status](https://badgen.net/travis/NickGard/tiny-isequal)](https://travis-ci.org/NickGard/tiny-isequal)
 [![license](https://badgen.net/badge/license/MIT/blue)](https://badgen.net/badge/license/MIT/blue)
 
-A minimal, `lodash.isequal` equivalent utility. For when every byte counts!
-Performs a deep (recursive) comparison between the two arguments.
+A minimal-weight utility similar to `lodash.isequal`. For when every byte counts!
+Performs a deep (recursive) comparison between the two arguments. It differs from
+`lodash.isequal` in one significant way: it requires that the two values have the
+same prototype and properies, including unenumerable ones.
 
 <hr/>
 
