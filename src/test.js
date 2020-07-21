@@ -1,7 +1,9 @@
 const { isEqual } = require("./index");
 const { expect } = require("chai");
+const vm = require("vm");
 
-var symbol1 = Symbol("a"), symbol2 = Symbol("b");
+var symbol1 = Symbol("a"),
+  symbol2 = Symbol("b");
 const noop = () => {};
 var root = (typeof global == "object" && global) || this;
 
@@ -25,6 +27,7 @@ it("should compare primitives", function() {
     [NaN, "a", false],
     [NaN, Infinity, false],
     ["a", "a", true],
+    ["abcdefghijklmnopqrstuvwxyz", "abcdefghijklmnopqrstuvwxyz", true],
     ["a", Object("a"), true],
     [Object("a"), Object("a"), true],
     ["a", "b", false],
@@ -107,6 +110,15 @@ it("should compare arrays", function() {
   expect(isEqual(array1, array2)).to.equal(false);
 });
 
+it("should compare arrays created from different realms (different constructors)", function() {
+  var xArraySame = vm.runInNewContext("new Array(1, 2, 3)");
+  var xArrayDiff = vm.runInNewContext("new Array(1, 2, 3, 4)");
+  var array = new Array(1, 2, 3);
+
+  expect(isEqual(array, xArraySame)).to.equal(true);
+  expect(isEqual(array, xArrayDiff)).to.equal(false);
+});
+
 it("should compare sparse arrays", function() {
   var array = Array(1);
 
@@ -143,7 +155,8 @@ it("should compare plain objects", function() {
 });
 
 it("should compare objects regardless of key order", function() {
-  var object1 = { a: 1, b: 2, c: 3 }, object2 = { c: 3, a: 1, b: 2 };
+  var object1 = { a: 1, b: 2, c: 3 },
+    object2 = { c: 3, a: 1, b: 2 };
 
   expect(isEqual(object1, object2)).to.equal(true);
 });
@@ -206,7 +219,8 @@ it("should compare objects with constructor properties", function() {
 });
 
 it("should compare arrays with circular references", function() {
-  var array1 = [], array2 = [];
+  var array1 = [],
+    array2 = [];
 
   array1.push(array1);
   array2.push(array2);
@@ -231,7 +245,9 @@ it("should compare arrays with circular references", function() {
 });
 
 it("should have transitive equivalence for circular references of arrays", function() {
-  var array1 = [], array2 = [array1], array3 = [array2];
+  var array1 = [],
+    array2 = [array1],
+    array3 = [array2];
 
   array1[0] = array1;
 
@@ -241,7 +257,8 @@ it("should have transitive equivalence for circular references of arrays", funct
 });
 
 it("should compare objects with circular references", function() {
-  var object1 = {}, object2 = {};
+  var object1 = {},
+    object2 = {};
 
   object1.a = object1;
   object2.a = object2;
@@ -266,7 +283,9 @@ it("should compare objects with circular references", function() {
 });
 
 it("should have transitive equivalence for circular references of objects", function() {
-  var object1 = {}, object2 = { a: object1 }, object3 = { a: object2 };
+  var object1 = {},
+    object2 = { a: object1 },
+    object3 = { a: object2 };
 
   object1.a = object1;
 
@@ -276,7 +295,8 @@ it("should have transitive equivalence for circular references of objects", func
 });
 
 it("should compare objects with multiple circular references", function() {
-  var array1 = [{}], array2 = [{}];
+  var array1 = [{}],
+    array2 = [{}];
 
   (array1[0].a = array1).push(array1);
   (array2[0].a = array2).push(array2);
@@ -358,8 +378,8 @@ it("should avoid common type coercions", function() {
 
 it("should compare `arguments` objects", function() {
   var args1 = (function() {
-    return arguments;
-  })(),
+      return arguments;
+    })(),
     args2 = (function() {
       return arguments;
     })(),
@@ -489,7 +509,8 @@ it("should compare functions", function() {
 
 it("should compare maps", function() {
   if (Map) {
-    var map1 = new Map(), map2 = new Map();
+    var map1 = new Map(),
+      map2 = new Map();
 
     map1.set("a", 1);
     map2.set("b", 2);
@@ -514,7 +535,8 @@ it("should compare maps", function() {
 
 it("should compare maps with circular references", function() {
   if (Map) {
-    var map1 = new Map(), map2 = new Map();
+    var map1 = new Map(),
+      map2 = new Map();
 
     map1.set("a", map1);
     map2.set("a", map2);
@@ -530,7 +552,8 @@ it("should compare promises by reference", function() {
   var promise = Promise.resolve(1);
   if (promise) {
     [[promise, Promise.resolve(1)], [promise]].forEach(function(promises) {
-      var promise1 = promises[0], promise2 = promises[1];
+      var promise1 = promises[0],
+        promise2 = promises[1];
 
       expect(isEqual(promise1, promise2)).to.equal(false);
       expect(isEqual(promise1, promise1)).to.equal(true);
@@ -556,7 +579,8 @@ it("should compare regexes", function() {
 it("should compare sets", function() {
   if (Set) {
     [[new Set(), new Set()]].forEach(function(sets) {
-      var set1 = sets[0], set2 = sets[1];
+      var set1 = sets[0],
+        set2 = sets[1];
 
       set1.add(1);
       set2.add(2);
@@ -582,7 +606,8 @@ it("should compare sets", function() {
 
 it("should compare sets with circular references", function() {
   if (Set) {
-    var set1 = new Set(), set2 = new Set();
+    var set1 = new Set(),
+      set2 = new Set();
 
     set1.add(set1);
     set2.add(set2);
@@ -596,7 +621,8 @@ it("should compare sets with circular references", function() {
 
 it("should compare symbol properties", function() {
   if (Symbol) {
-    var object1 = { a: 1 }, object2 = { a: 1 };
+    var object1 = { a: 1 },
+      object2 = { a: 1 };
 
     object1[symbol1] = { a: { b: 2 } };
     object2[symbol1] = { a: { b: 2 } };
