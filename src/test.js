@@ -115,6 +115,7 @@ it("should compare arrays created from different realms (different constructors)
   var xArrayDiff = vm.runInNewContext("new Array(1, 2, 3, 4)");
   var array = new Array(1, 2, 3);
 
+  expect(xArraySame instanceof Array).to.equal(false); // make sure it's from another realm
   expect(isEqual(array, xArraySame)).to.equal(true);
   expect(isEqual(array, xArrayDiff)).to.equal(false);
 });
