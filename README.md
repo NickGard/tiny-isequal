@@ -27,14 +27,16 @@ npm install @ngard/tiny-isequal
 ## Syntax
 
 ```javascript
-isequal(/* value1, value2 */);
+isEqual(/* value1, value2 */);
 ```
 
 ## Parameters
+
 `value1` - Any Javascript value
 `value2` - Any Javascript value
 
 ## Return
+
 `true` if the two values are deeply equal, `false` otherwise.
 
 <hr/>
@@ -42,30 +44,30 @@ isequal(/* value1, value2 */);
 ## Examples
 
 ```javascript
-import { isequal } from '@ngard/tiny-isequal';
+import { isEqual } from "@ngard/tiny-isequal";
 
-const samesies = isequal({ a: 1 }, { a: 1 });
+const samesies = isEqual({ a: 1 }, { a: 1 });
 // samesies is true
 ```
 
 ```javascript
-import { isequal } from '@ngard/tiny-isequal';
+import { isEqual } from "@ngard/tiny-isequal";
 
-const samesies = isequal({ a: { b: 'c' } }, { a: { b: 'c' } });
+const samesies = isEqual({ a: { b: "c" } }, { a: { b: "c" } });
 // samesies is true
 ```
 
 ```javascript
-import { isequal } from '@ngard/tiny-isequal';
+import { isEqual } from "@ngard/tiny-isequal";
 
 const obj = [1, 2, 3];
-const samesies = isequal(obj, obj);
+const samesies = isEqual(obj, obj);
 // samesies is true
 ```
 
 ```javascript
-import { isequal } from '@ngard/tiny-isequal';
+import { isEqual } from "@ngard/tiny-isequal";
 
-const samesies = isequal(NaN, NaN);
+const samesies = isEqual(NaN, NaN);
 // samesies is true
 ```
