@@ -3,14 +3,16 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.isEqual = (function() {
   var toString = Object.prototype.toString,
-    keys = Object.keys,
     getPrototypeOf = Object.getPrototypeOf,
-    getOwnPropertySymbols = Object.getOwnPropertySymbols;
+    getOwnProperties = Object.getOwnPropertySymbols
+      ? function(c) {
+          return Object.keys(c).concat(Object.getOwnPropertySymbols(c));
+        }
+      : Object.keys;
   function checkEquality(a, b, refs) {
-    var aEntries,
-      bEntries,
-      entry,
-      i,
+    var aElements,
+      bElements,
+      element,
       aType = toString.call(a),
       bType = toString.call(b);
 
@@ -23,10 +25,22 @@ exports.isEqual = (function() {
     // check to see if we've seen this reference before; if yes, return true
     if (refs.indexOf(a) > -1 && refs.indexOf(b) > -1) return true;
 
-    // save results for circular reference checks
+    // save results for circular checks
     refs.push(a, b);
 
     if (aType != bType) return false; // not the same type of objects
+
+    // for non-null objects, check all custom properties
+    aElements = getOwnProperties(a);
+    bElements = getOwnProperties(b);
+    if (
+      aElements.length != bElements.length ||
+      aElements.some(function(key) {
+        return !checkEquality(a[key], b[key], refs);
+      })
+    ) {
+      return false;
+    }
 
     switch (aType.slice(8, -1)) {
       case "Symbol":
@@ -41,14 +55,14 @@ exports.isEqual = (function() {
         return "" + a == "" + b;
       case "Set":
       case "Map": {
-        aEntries = a.entries();
-        bEntries = b.entries();
+        aElements = a.entries();
+        bElements = b.entries();
         do {
-          entry = aEntries.next();
-          if (!checkEquality(entry.value, bEntries.next().value, refs)) {
+          element = aElements.next();
+          if (!checkEquality(element.value, bElements.next().value, refs)) {
             return false;
           }
-        } while (!entry.done);
+        } while (!element.done);
         return true;
       }
       case "ArrayBuffer":
@@ -67,28 +81,18 @@ exports.isEqual = (function() {
       case "Arguments":
       case "Array":
         if (a.length != b.length) return false;
-        for (i = 0; i < a.length; i++) {
-          if (!(i in a) && !(i in b)) continue; // empty slots are equal
+        for (element = 0; element < a.length; element++) {
+          if (!(element in a) && !(element in b)) continue; // empty slots are equal
           // either one slot is empty but not both OR the elements are not equal
-          if (i in a != i in b || !checkEquality(a[i], b[i], refs))
+          if (
+            element in a != element in b ||
+            !checkEquality(a[element], b[element], refs)
+          )
             return false;
         }
         return true;
       case "Object":
-        aEntries = keys(a).concat(
-          getOwnPropertySymbols ? getOwnPropertySymbols(a) : []
-        );
-        bEntries = keys(b).concat(
-          getOwnPropertySymbols ? getOwnPropertySymbols(b) : []
-        );
-
-        return (
-          aEntries.length == bEntries.length &&
-          checkEquality(getPrototypeOf(a), getPrototypeOf(b), refs) &&
-          aEntries.every(function(key) {
-            return checkEquality(a[key], b[key], refs);
-          })
-        );
+        return checkEquality(getPrototypeOf(a), getPrototypeOf(b), refs);
       default:
         return false;
     }

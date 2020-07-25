@@ -329,6 +329,19 @@ describe("should compare arrays", function() {
       expect(isEqual(pair[2], pair[3]), "difference failed").to.equal(false);
     });
   });
+
+  it("should compare arrays with additional properties", function() {
+    var array1 = [1, 2, 3],
+      array2 = [1, 2, 3];
+
+    array1.secretProperty = "I am not a normal array";
+
+    expect(isEqual(array1, array2)).to.equal(false);
+
+    array2.secretProperty = "I am not a normal array";
+
+    expect(isEqual(array1, array2)).to.equal(true);
+  });
 });
 
 describe("should compare objects", function() {
@@ -592,9 +605,21 @@ describe("should compare objects", function() {
     function b() {
       return 1 + 2;
     }
+    var object = {
+      method1: function foo() {
+        return 1 + 2;
+      },
+      method2: function foo() {
+        return 1 + 2;
+      }
+    };
 
     expect(isEqual(a, a)).to.equal(true);
     expect(isEqual(a, b)).to.equal(false);
+    expect(isEqual(object.method1, object.method2)).to.equal(true);
+
+    object.method1.secret = "I am no longer the same as method2";
+    expect(isEqual(object.method1, object.method2)).to.equal(false);
   });
 
   it("should compare maps", function() {
@@ -622,6 +647,24 @@ describe("should compare objects", function() {
 
       map1.clear();
       map2.clear();
+    }
+  });
+
+  it("should compare maps with additional properties", function() {
+    if (Map) {
+      var map1 = new Map(),
+        map2 = new Map();
+
+      map1.set("a", 1);
+      map2.set("a", 1);
+
+      map1.secretProperty = "I am not a normal map";
+
+      expect(isEqual(map1, map2)).to.equal(false);
+
+      map2.secretProperty = "I am not a normal map";
+
+      expect(isEqual(map1, map2)).to.equal(true);
     }
   });
 
